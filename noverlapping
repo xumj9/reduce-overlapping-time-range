@@ -1,0 +1,34 @@
+import pandas as pd
+
+
+data = pd.read_table('test.txt',header=0,encoding='utf-8',delim_whitespace=True)
+data.columns=['stkcd','stkname','evendate','edate']
+
+start = data.loc[0, 'evendate']
+end = data.loc[0, 'edate']
+f=[[start,end]]
+
+for i in range(len(data.loc[:,'stkcd'])):
+    evendate = data.loc[i, 'evendate']
+    edate = data.loc[i,'edate']
+    print([start, end])
+    if edate > end > evendate:
+        end = edate
+        f.append([evendate, edate])
+    elif edate > evendate > end:
+        start = evendate
+        end = edate
+        f.append([evendate, edate])
+    elif start < evendate < edate < end:
+        f.append([evendate, edate])
+    elif evendate < start:
+        start = evendate
+        end = edate
+        f.append([evendate, edate])
+
+
+
+
+
+
+
